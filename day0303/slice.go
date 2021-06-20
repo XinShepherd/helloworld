@@ -36,4 +36,21 @@ func main() {
 	fmt.Println("s7:", s7)
 	a1[2] = 13000
 	fmt.Println("s7:", s7) // 切片是一个引用类型，指向底层数组，改了底层数组，切片也会变
+
+	// double cap when append ele
+	slice0 := []string{"广州", "深圳", "上海"}
+	fmt.Println("slice0 cap:", cap(slice0))
+	slice0 = append(slice0, "北京") // 必须要用原始变量接收
+	fmt.Println("slice0 cap after append:", cap(slice0))
+	slice1 := []string{"成都"}
+	fmt.Println("slice1 cap:", cap(slice1))
+	slice1 = append(slice1, slice0...) // 扩容机制要了解
+	fmt.Println("slice1 cap after append:", cap(slice1))
+
+	// copy
+	slice2 := make([]string, len(slice1), 10) // 长度也要写上
+	size := copy(slice2, slice1)
+	fmt.Println("size:", size)
+	fmt.Println("slice1 after copying:", slice1)
+	fmt.Println("slice2 after copying:", slice2)
 }
